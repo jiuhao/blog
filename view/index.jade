@@ -1,0 +1,245 @@
+html
+    head
+        link(rel="shortcut icon" type="image/x-icon" href="./images/icon.png" media="screen")
+        title GGBlog
+        style
+            include ../resource/css/index.css
+    body
+        div.top
+            div.center
+                div.right-box
+                    ul.menu
+                        li.u-i.i-user
+                            a.i-link
+                                img.i-face(src='//i0.hdslb.com/bfs/face/f906805bac7afb08b09498c1c00015b2bf675d43.jpg')
+                        li.u-i
+                            a.i-link 消息
+                            div
+                        li.u-i
+                            a.i-link 历史
+                            div
+                        li.u-i
+                            a.i-link 关注
+                            div
+                        li.u-i
+                            a.i-link 登录
+                        li.u-i.post
+                            a.i-link(href='') 上站
+        div.header(style='background-image: url("//i0.hdslb.com/bfs/archive/d018a3742c508cc379472735bf7d124cc7ae9f13.jpg")')
+            div.header-layer
+            div.header-center
+                a.logo(href='/index', style='background-image: url("//i0.hdslb.com/bfs/archive/ab1c51161404343df6feaed0a18352f7474c2430.png")')
+            div.nav
+                div.menu-wrapper
+                    ul.nav-menu
+                        li.m-i.home
+                            a.i-link(href='/index')
+                                em 首页
+                        li.m-i
+                            a.i-link(href='/academic')
+                                em 学术
+                                div.v-num
+                                    span 999
+                        li.m-i
+                            a.i-link(href='/topic')
+                                em 话题
+                                div.v-num
+                                    span 999
+                        li.m-i
+                            a.i-link(href='/vote')
+                                em 投票
+                                div.v-num
+                                    span 999
+                        li.m-i
+                            a.i-link(href='/activity')
+                                em 活动
+                                div.v-num
+                                    span 999
+                        li.m-i
+                            a.i-link(href='/emotion')
+                                em 情感
+                                div.v-num
+                                    span 999
+                        li.m-i
+                            a.i-link(href='/event')
+                                em 事件
+                                div.v-num
+                                    span 999
+                        li.m-i
+                            a.i-link(href='/help')
+                                em 帮助
+                                div.v-num
+                                    span 999
+                    div.search
+                        form#searchForm(action='' target='_blank')
+                            input.search-keyword(name='keyword' placeholder="可输入想查询的关键词～")
+                            button.search-submit(type='submit')
+                        a.link-ranking(href='/ranking')
+                            span 排行榜
+        div.b-page-body
+            div#index-container.index-container
+                div.container-top-wrapper
+                    div#b-index-top.container-top
+                        div.b-l
+                            div.topic-preview-wrapper
+                                div.topic-preview-list-wrapper
+                                    ul.topic-preview(style='width: 500%; margin-left: -100%;')
+                                        li
+                                            a(href='')
+                                                img(src='//i0.hdslb.com/bfs/archive/ae0a77b90b1e4b827a6fd1b6c6def2c8fbe51996.jpg')
+                                        li
+                                            a(href='')
+                                                img(src='//i0.hdslb.com/bfs/archive/0e596dae6871ebee272aecb41b2ed7a2b6492d4a.jpg')
+                                div.s-bottom
+                                    div.title
+                                        span(style='display:inline')
+                                            a(href='') 玩家，是一份职业，也是一份人生
+                                        span
+                                            a(href='') 啊…冬天快要过去了，wa2回来了
+                                    ul#topic_slider.slider-bar
+                                        li.on
+                                        li
+                        div.b-r
+                            div.top-list-wrapper
+                                ul.top-list.clearfix
+                                    li
+                                        div.v-item
+                                            a(href='', title='【12分钟】送给火影迷的礼物')
+                                                div.preview
+                                                    img(src='//i0.hdslb.com/bfs/archive/50e360f8d9c585033e7dc72080d8ec7a3948c5f1.jpg_320x200.jpg')
+                                                div.info
+                                                    div.t 【Vmoe字幕组】水树奈奈 NANA MIZUKI LIVE GALAXY -GENESIS-【特效字幕演唱会】
+                                                    p.up up主：哈吉bye
+                                                    p.browse 浏览：24795
+                                    li
+                                        div.v-item
+                                            a(href='', title='【12分钟】送给火影迷的礼物')
+                                                div.preview
+                                                    img(src='//i0.hdslb.com/bfs/archive/50e360f8d9c585033e7dc72080d8ec7a3948c5f1.jpg_320x200.jpg')
+                                                div.info
+                                                    div.t 【Vmoe字幕组】水树奈奈 NANA MIZUKI LIVE GALAXY -GENESIS-【特效字幕演唱会】
+                                                    p.up up主：哈吉bye
+                                                    p.browse 浏览：24795
+                                    li
+                                        div.v-item
+                                            a(href='', title='【12分钟】送给火影迷的礼物')
+                                                div.preview
+                                                    img(src='//i0.hdslb.com/bfs/archive/50e360f8d9c585033e7dc72080d8ec7a3948c5f1.jpg_320x200.jpg')
+                                                div.info
+                                                    div.t 【Vmoe字幕组】水树奈奈 NANA MIZUKI LIVE GALAXY -GENESIS-【特效字幕演唱会】
+                                                    p.up up主：哈吉bye
+                                                    p.browse 浏览：24795
+                                    li
+                                        div.v-item
+                                            a(href='', title='【12分钟】送给火影迷的礼物')
+                                                div.preview
+                                                    img(src='//i0.hdslb.com/bfs/archive/50e360f8d9c585033e7dc72080d8ec7a3948c5f1.jpg_320x200.jpg')
+                                                div.info
+                                                    div.t 【Vmoe字幕组】水树奈奈 NANA MIZUKI LIVE GALAXY -GENESIS-【特效字幕演唱会】
+                                                    p.up up主：哈吉bye
+                                                    p.browse 浏览：24795
+                                    li
+                                        div.v-item
+                                            a(href='', title='【12分钟】送给火影迷的礼物')
+                                                div.preview
+                                                    img(src='//i0.hdslb.com/bfs/archive/50e360f8d9c585033e7dc72080d8ec7a3948c5f1.jpg_320x200.jpg')
+                                                div.info
+                                                    div.t 【Vmoe字幕组】水树奈奈 NANA MIZUKI LIVE GALAXY -GENESIS-【特效字幕演唱会】
+                                                    p.up up主：哈吉bye
+                                                    p.browse 浏览：24795
+                                    li
+                                        div.v-item
+                                            a(href='', title='【12分钟】送给火影迷的礼物')
+                                                div.preview
+                                                    img(src='//i0.hdslb.com/bfs/archive/50e360f8d9c585033e7dc72080d8ec7a3948c5f1.jpg_320x200.jpg')
+                                                div.info
+                                                    div.t 【Vmoe字幕组】水树奈奈 NANA MIZUKI LIVE GALAXY -GENESIS-【特效字幕演唱会】
+                                                    p.up up主：哈吉bye
+                                                    p.browse 浏览：24795
+                                    li
+                                        div.v-item
+                                            a(href='', title='【12分钟】送给火影迷的礼物')
+                                                div.preview
+                                                    img(src='//i0.hdslb.com/bfs/archive/50e360f8d9c585033e7dc72080d8ec7a3948c5f1.jpg_320x200.jpg')
+                                                div.info
+                                                    div.t 【Vmoe字幕组】水树奈奈 NANA MIZUKI LIVE GALAXY -GENESIS-【特效字幕演唱会】
+                                                    p.up up主：哈吉bye
+                                                    p.browse 浏览：24795
+                                    li
+                                        div.v-item
+                                            a(href='', title='【12分钟】送给火影迷的礼物')
+                                                div.preview
+                                                    img(src='//i0.hdslb.com/bfs/archive/50e360f8d9c585033e7dc72080d8ec7a3948c5f1.jpg_320x200.jpg')
+                                                div.info
+                                                    div.t 【Vmoe字幕组】水树奈奈 NANA MIZUKI LIVE GALAXY -GENESIS-【特效字幕演唱会】
+                                                    p.up up主：哈吉bye
+                                                    p.browse 浏览：24795
+                div#b-academic.container-row
+                    div.b-section-body
+                        div.b-l
+                            div.b-head
+                                span.b-head-i
+                                span.b-head-t
+                                    a(href='')
+                                        h2 学术
+                                div.b-link-more
+                                    a(href='') 更多
+                                        i.b-icon.b-icon-arrow-r
+                                div.read-push
+                                    span.icon-refresh
+                                    span.info
+                                        b 1020
+                                        em 条新动态
+                            div.b-body
+                                ul.vidbox.v-list
+                                    li
+                                        div.v
+                                            a.preview.cover-preview(href='')
+                                                img
+                                            a(href='')
+                                                div.t [冰上的尤里/維勇] 年少爱情 Young Love
+                                                div.i
+                                                    span
+                                                        i.b-icon.b-icon-v-play &nbsp; &nbsp; &nbsp; 2.8w
+                                                    span
+                                                        i.b-icon.b-icon-v-dm &nbsp; &nbsp; &nbsp; 410
+                        div.b-r
+                            div.b-head
+                                div.left
+                                    span.b-head-t
+                                        h3 排行
+                                    ul.b-slt-tab
+                                        li.on
+                                            span.b-tab-text 全部
+                                        li
+
+                                div.right
+                                    div.b-slt
+                                        span.txt 三天
+                                        div.b-slt-arrow
+                            div.b-body
+                                div.r-list-body
+                                    div.r-list-wrapper(style='width: 200%; margin-left: -100%;')
+                                        ul.r-list
+                                        ul.r-list
+                                            li.on
+                                                i.number.n1 1
+                                                div.preview
+                                                    a(href='')
+                                                        img(src='//i2.hdslb.com/bfs/archive/7c20d6b17d17db5ab1bd3bfdc3aad3b195b1162a.jpg_320x200.jpg')
+                                                a.rl-info(href='')
+                                                    div.title.t 【Lex】带你看2016最污的福利动画
+                                                    div.i
+                                                        b.pts 综合评分：25.6万
+
+                                            li.off
+                                                i.number.n2 2
+                                                div.preview
+                                                    a(href='')
+                                                        img(src='//i2.hdslb.com/bfs/archive/7c20d6b17d17db5ab1bd3bfdc3aad3b195b1162a.jpg_320x200.jpg')
+                                                a.rl-info
+                                                    div.title.t 【Lex】带你看2017最污的福利动画
+                                                    div.i
+                                                        b.pts 综合评分：25.6万
+                                div.more-link
+                                    a(href='') 查看更多

@@ -1,0 +1,17 @@
+{
+  "name": "blog-server",
+  "version": "0.0.1",
+  "dependencies": {
+    "hprose": "*",
+    "co": "*",
+    "co-mongo": "*",
+    "koa": "1.2.4",
+    "koa-router": "5.4.0",
+    "koa-static-cache": "3.1.7",
+    "koa-bodyparser": "*",
+    "koa-xml-body": "*",
+    "uuid": "*",
+    "http2": "*",
+    "jade": "*"
+  }
+}
