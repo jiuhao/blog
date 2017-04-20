@@ -27,6 +27,10 @@ app.use(function*(next) {
 });
 
 //界面渲染
+router.get('/', function*() {
+    this.render('index');
+});
+//界面渲染
 router.get('/index', function*() {
     this.render('index');
 });
