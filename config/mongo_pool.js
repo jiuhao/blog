@@ -65,16 +65,16 @@ let pool = [];
 // };
 
 function* connect() {
-    var db = yield mongo.connect(conf.url);
-    var cols = conf.collections.slice(0);
-    for(var i in cols){
-        var name = cols[i];
+    let db = yield mongo.connect(conf.url);
+    let cols = conf.collections.slice(0);
+    for (let i in cols) {
+        let name = cols[i];
         db[name] = yield db.collection(name);
     }
     return db;
 }
 exports.open = function*() {
-    var db = pool.shift();
+    let db = pool.shift();
     if (db) {
         if (pool.length < conf.min) {
             co(function*() {
@@ -84,7 +84,7 @@ exports.open = function*() {
         }
         return db;
     } else {
-        var db = yield connect();
+        let db = yield connect();
         return db;
     }
 };

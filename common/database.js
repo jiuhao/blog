@@ -1,5 +1,6 @@
 const conf = require("../config/mongo");
 const pool = require("../config/mongo_pool");
+const config = require('../config');
 pool.configure(conf);
 
 // exports.use = async(call) => {
@@ -52,11 +53,10 @@ pool.configure(conf);
 //     }
 // };
 exports.use = function*(call) {
-    var db = yield pool.open();
+    let db = yield pool.open();
     try {
-        var auth = conf.auth;
-        if (auth) {
-            yield db.authenticate(auth.user, auth.pwd);
+        if (config.mongodb_user && config.mongodb_pwd) {
+            yield db.authenticate(config.mongodb_user, config.mongodb_pwd);
         }
         return yield call(db);
     } finally {
@@ -69,10 +69,10 @@ exports.warp = function (fn, self) {
         self = {};
     }
     return function*() {
-        var args = arguments;
+        let args = arguments;
         return yield exports.use(function*(db) {
-            var arr = [db];
-            for (var i in args) {
+            let arr = [db];
+            for (let i in args) {
                 arr.push(args[i]);
             }
             return yield fn.apply(self, arr);
