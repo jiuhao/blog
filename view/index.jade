@@ -3,26 +3,28 @@ html
         link(rel="shortcut icon" type="image/x-icon" href="./images/icon.png" media="screen")
         title GGBlog
         style
-            include ../resource/css/index.css
-    body
+            include ../public/css/index.css
+    body#body
         div.top
             div.center
                 div.right-box
                     ul.menu
                         li.u-i.i-user
-                            a.i-link
-                                img.i-face(src='//i0.hdslb.com/bfs/face/f906805bac7afb08b09498c1c00015b2bf675d43.jpg')
+                            a.i-link(v-show='user' style='display: hidden')
+                                img.i-face(':src'='user.headImageUrl')
                         li.u-i
-                            a.i-link 消息
+                            a.i-link(v-show='user' style='display: hidden') 消息
                             div
                         li.u-i
                             a.i-link 历史
                             div
                         li.u-i
-                            a.i-link 关注
+                            a.i-link(v-show='user' style='display: hidden') 关注
                             div
                         li.u-i
-                            a.i-link 登录
+                            a.i-link(href='/sign' v-show='!user' style='display: hidden') 登录
+                        li.u-i
+                            a.i-link(v-show='user' style='display: hidden') 退出
                         li.u-i.post
                             a.i-link(href='') 投稿
         div.header(style='background-image: url("./images/header.jpg")')
@@ -39,37 +41,37 @@ html
                             a.i-link(href='/academic')
                                 em 学术
                                 div.v-num
-                                    span 999
+                                    span(v-text="num.academic < 999 ? num.academic : '999+'")
                         li.m-i
                             a.i-link(href='/topic')
                                 em 话题
                                 div.v-num
-                                    span 999
+                                    span(v-text="num.topic < 999 ? num.topic : '999+'")
                         li.m-i
                             a.i-link(href='/vote')
                                 em 投票
                                 div.v-num
-                                    span 999
+                                    span(v-text="num.vote < 999 ? num.vote : '999+'")
                         li.m-i
                             a.i-link(href='/activity')
                                 em 活动
                                 div.v-num
-                                    span 999
+                                    span(v-text="num.activity < 999 ? num.activity : '999+'")
                         li.m-i
                             a.i-link(href='/emotion')
                                 em 情感
                                 div.v-num
-                                    span 999
+                                    span(v-text="num.emotion < 999 ? num.emotion : '999+'")
                         li.m-i
                             a.i-link(href='/event')
                                 em 事件
                                 div.v-num
-                                    span 999
+                                    span(v-text="num.event < 999 ? num.event : '999+'")
                         li.m-i
                             a.i-link(href='/help')
                                 em 帮助
                                 div.v-num
-                                    span 999
+                                    span(v-text="num.help < 999 ? num.help : '999+'")
                     div.search
                         form#searchForm(action='' target='_blank')
                             input.search-keyword(name='keyword' placeholder="可输入想查询的关键词～")
@@ -243,3 +245,10 @@ html
                                                         b.pts 综合评分：25.6万
                                 div.more-link
                                     a(href='') 查看更多
+        include ./layout/footer
+        script(src='http://cdn.bootcss.com/vue/1.0.27/vue.min.js')
+        script(src='http://cdn.bootcss.com/jquery/2.0.1/jquery.min.js')
+        script(src='http://cdn.bootcss.com/vue-resource/1.0.3/vue-resource.min.js')
+        script
+            include ../public/javascript/utils.js
+            include ../public/javascript/index.js

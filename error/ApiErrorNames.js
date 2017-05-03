@@ -1,0 +1,48 @@
+/**
+ * API错误名称
+ */
+const ApiErrorNames = {};
+
+ApiErrorNames.UNKNOW_ERROR = 'unknowError';
+ApiErrorNames.USER_NOT_EXIST = 'userNotExist';
+ApiErrorNames.NOT_LOGIN = 'notLogin';
+ApiErrorNames.DB_EXCEPTION = 'dbException';
+ApiErrorNames.SIGN_ERROR = 'signError';
+ApiErrorNames.SESSION_EXPIRE = 'sessionExpire';
+ApiErrorNames.LOGIN_ERROR = 'loginError';
+ApiErrorNames.PARAM_ERROR = 'paramError';
+ApiErrorNames.ALREADY_REGISTER = 'alreadyRegister';
+ApiErrorNames.NOT_REGISTER = 'notRegister';
+ApiErrorNames.INFO_ERROR = 'infoError';
+
+/**
+ * API错误名称对应的错误信息
+ */
+const error_map = new Map();
+
+error_map.set(ApiErrorNames.UNKNOW_ERROR, {code: -1, message: '未知错误'});
+error_map.set(ApiErrorNames.USER_NOT_EXIST, {code: 101, message: '用户不存在'});
+error_map.set(ApiErrorNames.NOT_LOGIN, {code: 102, message: '未登录'});
+error_map.set(ApiErrorNames.SIGN_ERROR, {code: 103, message: '签名错误'});
+error_map.set(ApiErrorNames.SESSION_EXPIRE, {code: 104, message: '会话过期'});
+error_map.set(ApiErrorNames.LOGIN_ERROR, {code: 105, message: '账户名或密码错误'});
+error_map.set(ApiErrorNames.PARAM_ERROR, {code: 106, message: '参数错误'});
+error_map.set(ApiErrorNames.ALREADY_REGISTER, {code: 107, message: '该账号已注册'});
+error_map.set(ApiErrorNames.NOT_REGISTER, {code: 108, message: '该账号未注册'});
+error_map.set(ApiErrorNames.INFO_ERROR, {code: 109, message: '信息错误'});
+//根据错误名称获取错误信息
+ApiErrorNames.getErrorInfo = (errorName) => {
+    let error_info;
+
+    if (errorName) {
+        error_info = error_map.get(errorName);
+    }
+    //如果没有对应的错误信息，默认'未知错误'
+    if (!error_info) {
+        errorName = 'unknowError';
+        error_info = error_map.get(errorName);
+    }
+    return error_info;
+};
+
+module.exports = ApiErrorNames;

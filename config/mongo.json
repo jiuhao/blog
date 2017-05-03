@@ -1,0 +1,12 @@
+{
+  "min": 10,
+  "max": 50,
+  "collections": [
+    "session",
+    "user",
+    "article",
+    "concern",
+    "recommendation",
+    "academic"
+  ]
+}

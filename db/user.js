@@ -1,68 +1,144 @@
+"use strict";
 /**
+ * _id 用户id
  * number 编号 学生编号／教师编号
  * nick 用户名
  * password 密码
  * headImageUrl 头像
- * mobile 手机号码
  * friendCount 好友数量
- * friendLimit 好友数量限制(与等级相关) 10 20 30 ...
  * messageCount 消息数量
+ * assets{
+ *      academic: 0,//学术
+ *      topic: 0,//话题
+ *      vote: 0,//投票
+ *      activity: 0,//活动
+ *      emotion: 0,//情感
+ *      event: 0//事件
+ * }
  * type 权限 1为学生 10为教师 100为管理员
- * xp 角色的经验值 111为Lv1 222为Lv2 ... Lv10
  * createTime 注册时间
  * lastLoginTime 最近一次登录时间
  * status -1为冻结 1为激活
  * **/
 
+const ApiError = require('../error/ApiError');
+const ApiErrorNames = require('../error/ApiErrorNames');
+const uuid = require('uuid');
+/**
+ * 注册
+ * @param db
+ * @param user 用户对象
+ * **/
+exports.register = function *(db, user) {
+    const User = db.user;
+    const now = new Date().getTime();
+    let r = yield User.findOne({
+        number: user.number,
+    });
+    if (r) {
+        throw new ApiError(ApiErrorNames.ALREADY_REGISTER);
+    }
+    r = yield User.insert({
+        _id: uuid.v1(),
+        number: user.number,
+        nick: user.nick,
+        headImageUrl: user.headImageUrl,
+        pwd: user.pwd,
+        friendCount: 0,
+        messageCount: 0,
+        assets: {
+            academic: 0,
+            topic: 0,
+            vote: 0,
+            activity: 0,
+            emotion: 0,
+            event: 0
+        },
+        type: user.type || 1,
+        createTime: now,
+        lastLoginTime: now,
+        status: 1
+    });
+    if (r.result.n != 1) {
+        throw new ApiError(ApiErrorNames.DB_EXCEPTION);
+    }
+    return {
+        id: r.ops[0]._id,
+        nick: r.ops[0].nick,
+        headImageUrl: r.ops[0].headImageUrl
+    };
+};
 /**
  * 登录
  * @param db
  * @param user 用户对象
  * **/
-exports.login = function *(db, user, type) {
-    var User = db.user;
-    var now = new Date().getTime();
-    var r = yield user.findOne({
+exports.login = function *(db, user) {
+    const User = db.user;
+    const now = new Date().getTime();
+    let r = yield User.findOne({
         number: user.number,
     });
     if (r) {
+        let result = {
+            id: r._id,
+            nick: r.nick,
+            headImageUrl: r.headImageUrl
+        };
         r = yield User.update({
-            nick: user.nick,
-            password: user.password
+            number: user.number,
+            pwd: user.pwd
         }, {
             $set: {
                 lastLoginTime: now
             }
         });
         if (r.result.n != 1) {
-            throw new Error('登录失败: 账户名或密码错误');
+            throw new ApiError(ApiErrorNames.LOGIN_ERROR);
         }
-        return {
-            first: 0,
-            _id: r.ops[0]._id,
-            nick: r.ops[0].nick,
-            headImageUrl: r.ops[0].headImageUrl
-        };
+        return result;
+    } else {
+        throw new ApiError(ApiErrorNames.NOT_REGISTER);
     }
-    r = yield User.insert({
-        number: user.nick,
-        password: user.password,
-        friendCount: 0,
-        friendLimit: 10,
-        messageCount: 0,
-        xp: 100,
-        type: type,
-        createTime: now,
-        lastLoginTime: now,
-        status: 1
+};
+/**
+ * 更新昵称
+ * **/
+exports.updateBaseInfo = function *(db, param) {
+    const User = db.user;
+    let r = yield User.update({
+        _id: param.userId,
+        nick: param.nick
     });
-    if (r.result.n != 1) {
-        throw new Error('注册失败: 系统错误');
+    if (r.result.ok != 1 || r.result.n != 1) {
+        throw new ApiError(ApiErrorNames.DB_EXCEPTION);
     }
-    return {
-        first: 1,
-        _id: r.ops[0]._id,
-        nick: r.ops[0].nick,
-        headImageUrl: r.ops[0].headImageUrl
-    };
+};
+/**
+ * 更新密码
+ * @param db
+ * @param userId 用户id
+ * @param old
+ * @param pwd
+ * **/
+exports.updatePwd = function *(db, userId, old, pwd) {
+    const User = db.user;
+    let r = yield User.findOne({
+        _id: userId,
+        pwd: old
+    });
+    if (!r) {
+        throw new ApiError(ApiErrorNames.INFO_ERROR);
+    }
+    r = yield User.update({
+        _id: userId,
+        pwd: old
+    }, {
+        $set: {
+            pwd: pwd
+        }
+    });
+    if (r.result.ok != 1 || r.result.n != 1) {
+        throw new ApiError(ApiErrorNames.DB_EXCEPTION);
+    }
 };

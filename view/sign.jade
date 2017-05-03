@@ -1,0 +1,28 @@
+html
+    head
+        meta(charset="UTF-8")
+        title GGBlog
+        link(rel="shortcut icon" type="image/x-icon" href="./images/icon.png" media="screen")
+        style
+            include ../public/css/header.css
+            include ../public/css/sign.css
+    body
+        a(href='/')
+            div.logo
+        div.content
+            div.nav
+                span#in.choose 登录
+                span#up.nav-item 注册
+            div#signin(style="display: block")
+                input.item(type='text' name='account' placeholder='账号')
+                input.item(type='password' name='pwd' placeholder='密码')
+                div#login.button 登录
+            div#signup(style="display: none")
+                input.item(type='text' name='account' placeholder='账号(3到12位)')
+                input.item(type='text' name='nick' placeholder='昵称(3到12位)')
+                input.item(type='password' name='pwd' placeholder='密码(3到12位)')
+                div#register.button 注册
+        include ./layout/footer
+        script(type="text/javascript" src="/wangEditor/dist/js/lib/jquery-1.10.2.min.js")
+        script
+            include ../public/javascript/sign.js
