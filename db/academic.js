@@ -12,6 +12,7 @@
  *      nick: 用户昵称,
  *      headImageUrl: 用户头像
  * }
+ * posterUrl 有图封面
  * publishTime 发布时间
  * updateTime 更新时间
  * status －1为删除 1为可用
@@ -32,6 +33,8 @@ exports.add = function *(db, data) {
         title: data.title,
         outline: data.outline,
         content: data.content,
+        author: data.author,
+        posterUrl: data.posterUrl || '',
         visits: 0,
         comments: 0,
         publishTime: now,
@@ -143,6 +146,9 @@ exports.load = function *(db, id) {
         author: true,
         publishTime: true
     });
+    if (!r) {
+        throw new ApiError(ApiErrorNames.CONTENT_NOT_EXIST);
+    }
 };
 /**
  * 关键字搜索
@@ -185,4 +191,23 @@ exports.listByKeyword = function *(db, keyword, currentPage, size) {
 exports.count = function *(db) {
     let Academic = db.academic;
     return yield Academic.count();
+};
+/**
+ * 8个推荐
+ * **/
+exports.recommendArticle = function *(db) {
+    let Academic = db.academic;
+    return yield Academic.find({
+        posterUrl: {$ne: ''}
+    }, {
+        _id: true,
+        title: true,
+        outline: true,
+        content: true,
+        posterUrl: true,
+        visits: true,
+        comments: true,
+        author: true,
+        publishTime: true
+    }).sort({updateTime: -1}).limit(8).toArray();
 };

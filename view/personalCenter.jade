@@ -6,7 +6,7 @@ html
         style
             include ../public/css/header.css
             include ../public/css/personalCenter.css
-    body
+    body#body
         include ./layout/header
         div.center-header
             div.left
@@ -26,25 +26,25 @@ html
                 ul.nav-menu
                     li
                         a() 学术
-                            b 10
+                            b(v-text="num.academic < 999 ? num.academic : '999+'")
                     li
                         a() 话题
-                            b 10
+                            b(v-text="num.topic < 999 ? num.topic : '999+'")
                     li
                         a() 投票
-                            b 10
+                            b(v-text="num.vote < 999 ? num.vote : '999+'")
                     li
                         a() 活动
-                            b 10
+                            b(v-text="num.activity < 999 ? num.activity : '999+'")
                     li
                         a() 情感
-                            b 10
+                            b(v-text="num.emotion < 999 ? num.emotion : '999+'")
                     li
                         a() 事件
-                            b 10
+                            b(v-text="num.event < 999 ? num.event : '999+'")
                     li
                         a() 帮助
-                            b 10
+                            b(v-text="num.help < 999 ? num.help : '999+'")
                 div.bottom-nav
         div.center-body
             div#article
@@ -60,7 +60,6 @@ html
                             span 2017-04-27
                             div.r
                                 div.eye
-
                                 span 45
                 div.card
                     div.article
@@ -69,3 +68,10 @@ html
                 div.card
                     div.article
             div#vote
+        script(src='http://cdn.bootcss.com/vue/1.0.27/vue.min.js')
+        script(src='http://cdn.bootcss.com/jquery/2.0.1/jquery.min.js')
+        script(src='http://cdn.bootcss.com/vue-resource/1.0.3/vue-resource.min.js')
+        script
+            include ../public/javascript/md5.js
+            include ../public/javascript/utils.js
+            include ../public/javascript/personalCenter.js

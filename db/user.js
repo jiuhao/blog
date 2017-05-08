@@ -102,13 +102,21 @@ exports.login = function *(db, user) {
     }
 };
 /**
- * 更新昵称
+ * 更新头像 昵称
  * **/
 exports.updateBaseInfo = function *(db, param) {
     const User = db.user;
+    let query = {};
+    if (param.nick) {
+        query.nick = param.nick;
+    }
+    if (query.headImageUrl) {
+        query.headImageUrl = param.headImageUrl;
+    }
     let r = yield User.update({
         _id: param.userId,
-        nick: param.nick
+    }, {
+        $set: query
     });
     if (r.result.ok != 1 || r.result.n != 1) {
         throw new ApiError(ApiErrorNames.DB_EXCEPTION);
@@ -141,4 +149,17 @@ exports.updatePwd = function *(db, userId, old, pwd) {
     if (r.result.ok != 1 || r.result.n != 1) {
         throw new ApiError(ApiErrorNames.DB_EXCEPTION);
     }
+};
+/**
+ * 查看单个用户
+ * **/
+exports.load = function *(db, userId) {
+    const User = db.user;
+    let r = yield User.findOne({
+        _id: userId
+    });
+    if (!r) {
+        throw new ApiError(ApiErrorNames.USER_NOT_EXIST);
+    }
+    return r;
 };

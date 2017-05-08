@@ -3,22 +3,25 @@ div.top-header
         div.center
             div.right-box
                 ul.menu
-                    li.u-i.i-user
-                        a.i-link
-                            img.i-face(src='//i0.hdslb.com/bfs/face/f906805bac7afb08b09498c1c00015b2bf675d43.jpg')
-                    li.u-i
-                        a.i-link 消息
-                        div
-                    li.u-i
-                        a.i-link 历史
-                        div
-                    li.u-i
-                        a.i-link 关注
-                        div
-                    li.u-i
-                        a.i-link(href='/sign') 登录
-                    li.u-i.post
-                        a.i-link(href='') 投稿
+                    ul.menu
+                        li.u-i.i-user
+                            a.i-link(v-show='user' style='display: hidden')
+                                img.i-face(':src'='user.headImageUrl')
+                        li.u-i
+                            a.i-link(v-show='user' style='display: hidden') 消息
+                            div
+                        li.u-i
+                            a.i-link 历史
+                            div
+                        li.u-i
+                            a.i-link(v-show='user' style='display: hidden') 关注
+                            div
+                        li.u-i
+                            a.i-link(href='/sign' v-show='!user' style='display: hidden') 登录
+                        li.u-i
+                            a.i-link('@click'='logout()' v-show='user' style='display: hidden') 退出
+                        li.u-i.post
+                            a.i-link(href='/editor') 投稿
     div.header(style='background-image: url("./images/header.jpg")')
         div.header-layer
         div.header-center

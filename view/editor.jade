@@ -15,26 +15,28 @@ html
                 margin: 0 auto;
                 position: relative;
             }
-    body
+    body#body
         div.top-header
             div.top
                 div.center
                     div.right-box
                         ul.menu
                             li.u-i.i-user
-                                a.i-link
-                                    img.i-face(src='//i0.hdslb.com/bfs/face/f906805bac7afb08b09498c1c00015b2bf675d43.jpg')
+                                a.i-link(href= '/personalCenter' v-show='user' style='display: hidden')
+                                    img.i-face(':src'='user.headImageUrl')
                             li.u-i
-                                a.i-link 消息
+                                a.i-link(v-show='user' style='display: hidden') 消息
                                 div
                             li.u-i
                                 a.i-link 历史
                                 div
                             li.u-i
-                                a.i-link 关注
+                                a.i-link(v-show='user' style='display: hidden') 关注
                                 div
+                            li.u-i
+                                a.i-link(v-show='user' style='display: hidden') 退出
                             li.u-i.post
-                                a.i-link(href='') 发表
+                                a#publish.i-link('@click'="publish()") 发表
             div.header(style='background-image: url("./images/header.jpg")')
                 div.header-layer
                 div.header-center
@@ -43,8 +45,12 @@ html
             div#editor-trigger
                 p 请输入内容
         include ./layout/footer
-        script(type="text/javascript" src="/wangEditor/dist/js/lib/jquery-1.10.2.min.js")
+        script(src='http://cdn.bootcss.com/vue/1.0.27/vue.min.js')
+        script(src='http://cdn.bootcss.com/jquery/2.0.1/jquery.min.js')
+        script(src='http://cdn.bootcss.com/vue-resource/1.0.3/vue-resource.min.js')
         script(type="text/javascript" src="/wangEditor/dist/js/wangEditor.js")
         script
+            include ../public/javascript/md5.js
+            include ../public/javascript/utils.js
             include ../public/javascript/wangEditer.js
-
+            include ../public/javascript/editor.js

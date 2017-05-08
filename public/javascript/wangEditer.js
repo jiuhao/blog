@@ -1,21 +1,22 @@
 // 阻止输出log
 // wangEditor.config.printLog = false;
 
-var editor = new wangEditor('editor-trigger');
+let editor = new wangEditor('editor-trigger');
 
 // 上传图片
-editor.config.uploadImgUrl = '/upload';
+editor.config.uploadImgUrl = '/api/upload';
 editor.config.uploadParams = {
-    // token1: 'abcde',
-    // token2: '12345'
+    token: 'ggblog',
+    user: 'ggblog'
 };
 editor.config.uploadHeaders = {
-    // 'Accept' : 'text/x-json'
-}
+    'Accept': 'text/x-json'
+};
+
 // editor.config.uploadImgFileName = 'myFileName';
 
 // 隐藏网络图片
-// editor.config.hideLinkImg = true;
+editor.config.hideLinkImg = true;
 
 // 表情显示项
 editor.config.emotionsShow = 'value';
@@ -75,15 +76,39 @@ editor.config.emotions = {
 //     'fullscreen'
 // ];
 // 只排除某几个菜单（兼容IE低版本，不支持ES5的浏览器），支持ES5的浏览器可直接用 [].map 方法
-// editor.config.menus = $.map(wangEditor.config.menus, function(item, key) {
-//     if (item === 'insertcode') {
-//         return null;
-//     }
-//     if (item === 'fullscreen') {
-//         return null;
-//     }
-//     return item;
-// });
+editor.config.menus = [
+    'source',
+    '|',
+    'bold',
+    'underline',
+    'italic',
+    'strikethrough',
+    'eraser',
+    'forecolor',
+    'bgcolor',
+    '|',
+    'quote',
+    'fontfamily',
+    'fontsize',
+    'head',
+    'unorderlist',
+    'orderlist',
+    'alignleft',
+    'aligncenter',
+    'alignright',
+    '|',
+    'link',
+    'unlink',
+    'table',
+    'emotion',
+    '|',
+    'img',
+    'insertcode',
+    '|',
+    'undo',
+    'redo',
+    'fullscreen'
+];
 
 // onchange 事件
 editor.onchange = function () {

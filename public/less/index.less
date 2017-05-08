@@ -423,6 +423,38 @@ input, textarea {
                     margin: 0 auto;
                     display: block;
                   }
+                  .info-select{
+                    height: 100px;
+                    overflow: hidden;
+                    position: absolute;
+                    width: 100%;
+                    bottom: 0;
+                    left: 0;
+                    z-index: 1;
+                    background: linear-gradient(transparent, rgba(0,0,0,0.1) 20%, rgba(0,0,0,0.2) 35%, rgba(0,0,0,0.6) 65%, rgba(0,0,0,0.9));
+                    border-radius: 0 0 4px 4px;
+                    .up {
+                      margin-right: 5px;
+                      margin-top: 20px;
+                      margin-left: 5px;
+                      text-overflow: ellipsis;
+                      overflow: hidden;
+                      white-space: nowrap;
+                    }
+                    .browse{
+                      margin-top: 25px;
+                      margin-left: 5px;
+                      text-overflow: ellipsis;
+                      overflow: hidden;
+                      white-space: nowrap;
+                    }
+                    .p {
+                      color: #99a2aa;
+                      margin: 5px 5px 0;
+                      opacity: 0;
+                      transition: .2s all linear;
+                    }
+                  }
                   .info {
                     padding: 10px 0 3px;
                     height: 18px;
@@ -435,7 +467,16 @@ input, textarea {
                     background: linear-gradient(transparent, rgba(0, 0, 0, 0.1) 20%, rgba(0, 0, 0, 0.2) 35%, rgba(0, 0, 0, 0.6) 65%, rgba(0, 0, 0, 0.9));
                     border-radius: 0 0 4px 4px;
                     .up {
-                      margin-top: 10px;
+                      margin-right: 5px;
+                      margin-top: 20px;
+                      margin-left: 5px;
+                      text-overflow: ellipsis;
+                      overflow: hidden;
+                      white-space: nowrap;
+                    }
+                    .browse{
+                      margin-top: 25px;
+                      margin-left: 5px;
                       text-overflow: ellipsis;
                       overflow: hidden;
                       white-space: nowrap;
@@ -448,14 +489,24 @@ input, textarea {
                     }
                   }
                   .t {
-                    height: 18px;
+                    height: 50px;
+                    padding-top: 4px;
                     line-height: 18px;
                     overflow: hidden;
                     color: #fff;
                     margin: 0 5px;
                     word-break: break-all;
                     word-wrap: break-word;
-                    font-size: 12px;
+                  }
+                  .t-select {
+                    height: 50px;
+                    padding-top: 10px;
+                    line-height: 18px;
+                    overflow: hidden;
+                    color: #fff;
+                    margin: 0 5px;
+                    word-break: break-all;
+                    word-wrap: break-word;
                   }
                 }
               }

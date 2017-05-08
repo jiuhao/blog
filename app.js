@@ -16,7 +16,10 @@ let cache = require('./common/cache');
 app.use(convert(cors()));
 app.use(bodyParser({enableTypes: ['text', 'json', "form"], jsonLimit: '100mb'}));
 //静态资源的支持
-app.use(staticCache(path.join(__dirname, 'public'), {maxAge: 365 * 24 * 60 * 60}));
+app.use(staticCache(path.join(__dirname, 'public'), {
+    maxAge: 365 * 24 * 60 * 60,
+    dynamic: true
+}));
 
 //添加对渲染的缓存支持
 cache = new cache(function (name) {
@@ -65,7 +68,9 @@ for (let name in server) {
         ctx.body = await new Promise(function (res, rej) {
             co(function*() {
                 try {
-                    if (!(ctx.request.body instanceof Array)) {
+                    if (ctx.request.url == '/api/upload') {
+                        ctx.request.body = [ctx];
+                    } else if (!(ctx.request.body instanceof Array)) {
                         let arr = [];
                         for (let item in ctx.request.body) {
                             arr.push(ctx.request.body[item]);

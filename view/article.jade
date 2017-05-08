@@ -11,22 +11,21 @@ html
             #editor-trigger {
                 height: 150px;
             }
-    body
+    body#body
         include ./layout/header
         div.content
             div.left
                 div.article
-                    h2(style="text-align: center; ")
-                        b 我是大标题
-                    p 亲爱的，红尘漫漫，山高水阔知何处？你我灵魂做伴，一路并蒂，一路双飞，怎不令我对酒当歌，长忆梁祝化蝶款款飞？你是风儿我是沙，往日如烟往日花。“世界上，最美好的事，就是当你喜欢一个人的时候，对方也正好喜欢你”。亲爱的，这隽美的诗句，是为你我而写的吗？相伴的日子，我反复吟诵张爱玲的爱情诗句:于千万人中遇见你所要遇见的人，于千万年之中，时间无涯的荒野里，没有早一步，也没有晚一步。刚巧赶上了，没有别的话可说，唯有轻轻地问一句，哦，你也在这里吗？这是何等曼妙啊！
-                    p 享受这令人愉悦的折磨吧!
-                    br
+                    div(v-html='article.content')
             div.right
                 div.author
                     a.link(href='www.baidu.com', target="_blank")
                         img.headImage(src='http://cdn.duitang.com/uploads/people/201701/02/20170102164107_eVxrS.thumb.100_100_c.jpeg')
                     a.nick(href='www.baidu.com', target="_blank") _okok
-                    span.time 20分钟前｜40次浏览
+                    span.time
+                        span 20分钟前
+                        span |
+                        span 40次浏览
         div.editor
             div#editor-trigger
         div.comment
@@ -73,7 +72,12 @@ html
                 div.card
                     button.more 加载更多
         include ./layout/footer
-        script(type="text/javascript" src="/wangEditor/dist/js/lib/jquery-1.10.2.min.js")
+        script(src='http://cdn.bootcss.com/vue/1.0.27/vue.min.js')
+        script(src='http://cdn.bootcss.com/jquery/2.0.1/jquery.min.js')
+        script(src='http://cdn.bootcss.com/vue-resource/1.0.3/vue-resource.min.js')
         script(type="text/javascript" src="/wangEditor/dist/js/wangEditor.js")
         script
+            include ../public/javascript/md5.js
+            include ../public/javascript/utils.js
             include ../public/javascript/wangEditer.js
+            include ../public/javascript/article.js

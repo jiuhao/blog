@@ -4,6 +4,7 @@ const Session = require('../db/session');
 const ApiError = require('../error/ApiError');
 const ApiErrorNames = require('../error/ApiErrorNames');
 const Properties = require('../utils/properties');
+const File = require('../common/file');
 /**
  * 用户注册
  * @param db
@@ -47,19 +48,28 @@ exports.login = Database.warp(function *(db, param) {
  *  更新个人信息
  *  @param db
  *  @param session
- *  @param param
+ *  @param param{nick,headImage{file, suffix}}
  * **/
 exports.updateBaseInfo = Database.warp(function *(db, session, param) {
-    let number = param.number;
-    let nick = param.nick;
-    if (!number || number.length < 3 || number.length > 15 || !nick || nick.length < 3 || nick.length > 15) {
-        throw new ApiError(ApiErrorNames.PARAM_ERROR);
+    let headImageUrl = '';
+    let nick = '';
+    if (param.headImage && param.headImage.file && param.headImage.suffix) {
+        headImageUrl = yield File.upload(param.headImage.file, param.headImage.suffix);
+    }
+    if (param.nick) {
+        if (param.nick.length < 3 || param.nick.length > 15) {
+            throw new ApiError(ApiErrorNames.PARAM_ERROR);
+        }
+        nick = param.nick;
     }
     let operator = yield Session.check(db, session.id, session.timestamp, session.sign);
-    yield User.updateBaseInfo(db, {
-        userId: operator.id,
-        nick: nick
-    });
+    if (nick || headImageUrl) {
+        yield User.updateBaseInfo(db, {
+            userId: operator.id,
+            nick: nick,
+            headImageUrl: headImageUrl
+        });
+    }
     return 'success';
 });
 /**
@@ -77,4 +87,20 @@ exports.updatePwd = Database.warp(function *(db, session, param) {
     let operator = yield Session.check(db, session.id, session.timestamp, session.sign);
     yield User.updatePwd(db, operator.id, old, pwd);
     return 'success';
+});
+/**
+ * 登出
+ * **/
+exports.logout = Database.warp(function *(db, session) {
+    let operator = yield Session.check(db, session.id, session.timestamp, session.sign);
+    yield Session.logout(db, session.id);
+    return 'success';
+});
+/**
+ * 查看自己的数据
+ * **/
+exports.getUserNum = Database.warp(function *(db, session) {
+    let operator = yield Session.check(db, session.id, session.timestamp, session.sign);
+    let user = yield User.load(db, operator.id);
+    return user.assets;
 });

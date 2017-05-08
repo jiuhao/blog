@@ -40,7 +40,7 @@ exports.create = function *(db, time, user) {
         user: {
             id: user.id,
             nick: user.nick || Properties.defaultNick,
-            headImageUrl: Properties.baseUrl + Properties.defaultHeadImageUrl,
+            headImageUrl: Properties.defaultHeadImageUrl,
             type: user.type || 1
         },
         createTime: session.createTime,
@@ -70,6 +70,9 @@ exports.check = function *(db, id, timestamp, sign) {
     let now = new Date().getTime();
     let Session = db.session;
     let session = yield Session.findOne({_id: id});
+    if (!session) {
+        throw new ApiError(ApiErrorNames.NOT_LOGIN);
+    }
     if (session.expireTime < now) {
         throw new ApiError(ApiErrorNames.SESSION_EXPIRE);
     }
@@ -87,4 +90,13 @@ exports.check = function *(db, id, timestamp, sign) {
     } else {
         throw new ApiError(ApiErrorNames.NOT_LOGIN);
     }
+};
+/**
+ * 登出
+ * **/
+exports.logout = function *(db, id) {
+    let Session = db.session;
+    yield Session.remove({
+        _id: id
+    });
 };

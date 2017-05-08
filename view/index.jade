@@ -10,7 +10,7 @@ html
                 div.right-box
                     ul.menu
                         li.u-i.i-user
-                            a.i-link(v-show='user' style='display: hidden')
+                            a.i-link(href= '/personalCenter' v-show='user' style='display: hidden')
                                 img.i-face(':src'='user.headImageUrl')
                         li.u-i
                             a.i-link(v-show='user' style='display: hidden') 消息
@@ -24,9 +24,9 @@ html
                         li.u-i
                             a.i-link(href='/sign' v-show='!user' style='display: hidden') 登录
                         li.u-i
-                            a.i-link(v-show='user' style='display: hidden') 退出
+                            a.i-link('@click'='logout()' v-show='user' style='display: hidden') 退出
                         li.u-i.post
-                            a.i-link(href='') 投稿
+                            a.i-link(href='/editor') 投稿
         div.header(style='background-image: url("./images/header.jpg")')
             div.header-layer
             div.header-center
@@ -104,78 +104,16 @@ html
                         div.b-r
                             div.top-list-wrapper
                                 ul.top-list.clearfix
-                                    li
+                                    li(v-for="item in recommendArticle")
                                         div.v-item
-                                            a(href='', title='【12分钟】送给火影迷的礼物')
+                                            a('@mouseenter'='details()' '@mouseleave'='hiddenDetails()' ':title'='item.title' '@click'='skip(item.articleId)')
                                                 div.preview
                                                     img(src='//i0.hdslb.com/bfs/archive/50e360f8d9c585033e7dc72080d8ec7a3948c5f1.jpg_320x200.jpg')
-                                                div.info
-                                                    div.t 【Vmoe字幕组】水树奈奈 NANA MIZUKI LIVE GALAXY -GENESIS-【特效字幕演唱会】
-                                                    p.up up主：哈吉bye
-                                                    p.browse 浏览：24795
-                                    li
-                                        div.v-item
-                                            a(href='', title='【12分钟】送给火影迷的礼物')
-                                                div.preview
-                                                    img(src='//i0.hdslb.com/bfs/archive/50e360f8d9c585033e7dc72080d8ec7a3948c5f1.jpg_320x200.jpg')
-                                                div.info
-                                                    div.t 【Vmoe字幕组】水树奈奈 NANA MIZUKI LIVE GALAXY -GENESIS-【特效字幕演唱会】
-                                                    p.up up主：哈吉bye
-                                                    p.browse 浏览：24795
-                                    li
-                                        div.v-item
-                                            a(href='', title='【12分钟】送给火影迷的礼物')
-                                                div.preview
-                                                    img(src='//i0.hdslb.com/bfs/archive/50e360f8d9c585033e7dc72080d8ec7a3948c5f1.jpg_320x200.jpg')
-                                                div.info
-                                                    div.t 【Vmoe字幕组】水树奈奈 NANA MIZUKI LIVE GALAXY -GENESIS-【特效字幕演唱会】
-                                                    p.up up主：哈吉bye
-                                                    p.browse 浏览：24795
-                                    li
-                                        div.v-item
-                                            a(href='', title='【12分钟】送给火影迷的礼物')
-                                                div.preview
-                                                    img(src='//i0.hdslb.com/bfs/archive/50e360f8d9c585033e7dc72080d8ec7a3948c5f1.jpg_320x200.jpg')
-                                                div.info
-                                                    div.t 【Vmoe字幕组】水树奈奈 NANA MIZUKI LIVE GALAXY -GENESIS-【特效字幕演唱会】
-                                                    p.up up主：哈吉bye
-                                                    p.browse 浏览：24795
-                                    li
-                                        div.v-item
-                                            a(href='', title='【12分钟】送给火影迷的礼物')
-                                                div.preview
-                                                    img(src='//i0.hdslb.com/bfs/archive/50e360f8d9c585033e7dc72080d8ec7a3948c5f1.jpg_320x200.jpg')
-                                                div.info
-                                                    div.t 【Vmoe字幕组】水树奈奈 NANA MIZUKI LIVE GALAXY -GENESIS-【特效字幕演唱会】
-                                                    p.up up主：哈吉bye
-                                                    p.browse 浏览：24795
-                                    li
-                                        div.v-item
-                                            a(href='', title='【12分钟】送给火影迷的礼物')
-                                                div.preview
-                                                    img(src='//i0.hdslb.com/bfs/archive/50e360f8d9c585033e7dc72080d8ec7a3948c5f1.jpg_320x200.jpg')
-                                                div.info
-                                                    div.t 【Vmoe字幕组】水树奈奈 NANA MIZUKI LIVE GALAXY -GENESIS-【特效字幕演唱会】
-                                                    p.up up主：哈吉bye
-                                                    p.browse 浏览：24795
-                                    li
-                                        div.v-item
-                                            a(href='', title='【12分钟】送给火影迷的礼物')
-                                                div.preview
-                                                    img(src='//i0.hdslb.com/bfs/archive/50e360f8d9c585033e7dc72080d8ec7a3948c5f1.jpg_320x200.jpg')
-                                                div.info
-                                                    div.t 【Vmoe字幕组】水树奈奈 NANA MIZUKI LIVE GALAXY -GENESIS-【特效字幕演唱会】
-                                                    p.up up主：哈吉bye
-                                                    p.browse 浏览：24795
-                                    li
-                                        div.v-item
-                                            a(href='', title='【12分钟】送给火影迷的礼物')
-                                                div.preview
-                                                    img(src='//i0.hdslb.com/bfs/archive/50e360f8d9c585033e7dc72080d8ec7a3948c5f1.jpg_320x200.jpg')
-                                                div.info
-                                                    div.t 【Vmoe字幕组】水树奈奈 NANA MIZUKI LIVE GALAXY -GENESIS-【特效字幕演唱会】
-                                                    p.up up主：哈吉bye
-                                                    p.browse 浏览：24795
+                                                div#info.info
+                                                    div#t.t(v-text='item.outline')
+                                                    p.up
+                                                        span(style='float: left' v-text='item.author.nick')
+                                                        span(style='float: right' v-text='item.visits')
                 div#b-academic.container-row
                     div.b-section-body
                         div.b-l
@@ -250,5 +188,6 @@ html
         script(src='http://cdn.bootcss.com/jquery/2.0.1/jquery.min.js')
         script(src='http://cdn.bootcss.com/vue-resource/1.0.3/vue-resource.min.js')
         script
+            include ../public/javascript/md5.js
             include ../public/javascript/utils.js
             include ../public/javascript/index.js

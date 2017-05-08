@@ -4,6 +4,8 @@ const Session = require('../db/session');
 const Academic = require('../db/academic');
 const ApiError = require('../error/ApiError');
 const ApiErrorNames = require('../error/ApiErrorNames');
+const Time = require('../utils/time');
+const Properties = require('../utils/properties');
 /**
  * 发布学术文章
  * @param param
@@ -20,7 +22,12 @@ exports.publishToAcademic = Database.warp(function *(db, session, param) {
     yield Academic.add(db, {
         title: title,
         outline: outline,
-        content: content
+        content: content,
+        author: {
+            id: operator.id,
+            nick: operator.nick,
+            headImageUrl: operator.headImageUrl
+        }
     });
     return 'success';
 });
@@ -71,4 +78,31 @@ exports.getNum = Database.warp(function *(db) {
         event: 0,
         help: 0
     }
+});
+/**
+ * 查看文章
+ * **/
+exports.getArticle = Database.warp(function *(db, session, id) {
+    let operator;
+    if (session && session.id) {
+        operator = yield Session.check(db, session.id, session.timestamp, session.sign);
+    }
+    let article = yield Academic.load(db, id);
+    article.articleId = article._id;
+    delete article._id;
+    article.publishTime = Time.getTime(article.publishTime);
+    return article;
+});
+/**
+ * 查看推荐
+ * **/
+exports.recommendArticle = Database.warp(function *(db) {
+    let r = yield Academic.recommendArticle(db);
+    for (let i = 0; i < r.length; i++) {
+        r[i].articleId = '' + r[i]._id;
+        delete r[i]._id;
+        r[i].posterUrl = Properties.baseUrl + r[i].posterUrl || '';
+        r[i].publishTime = Time.getTime(r[i].publishTime);
+    }
+    return r;
 });

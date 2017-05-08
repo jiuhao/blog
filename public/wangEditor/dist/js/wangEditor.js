@@ -6542,7 +6542,9 @@ _e(function (E, $) {
 
         // -------- 定义load函数 --------
         fns.onload || (fns.onload = function (resultText, xhr) {
-            E.log('上传结束，返回结果为 ' + resultText);
+            resultText = JSON.parse(resultText);
+            resultText = resultText.data;
+            E.log('上传结束，返回结果为**** ' + resultText);
 
             var editor = this;
             var originalName = editor.uploadImgOriginalName || '';  // 上传图片时，已经将图片的名字存在 editor.uploadImgOriginalName
