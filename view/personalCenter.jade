@@ -12,7 +12,8 @@ html
             div.left
                 div.author
                     div.headImage
-                    div.nick _koko
+                        img(':src'='user.headImageUrl')
+                    div.nick(v-text='user.nick')
                     div.other
                         div.fans 粉丝
                             span 12
@@ -48,26 +49,22 @@ html
                 div.bottom-nav
         div.center-body
             div#article
-                div.card
+                div.card(v-for='item in personalData.academic' '@click'='skip(item._id)')
                     div.article
                         div.article-content
                             div.article-info
-                                h3.article-title _koko
-                                p.article-text 享受这令人愉悦的折磨吧！享受这令人愉悦的折磨吧！享受这令人愉悦的折磨吧！享受这令人愉悦的折磨吧！享受这令人愉悦的折磨吧！享受这令人愉悦的折磨吧！享受这令人愉悦的折磨吧！享受这令人愉悦的折磨吧！
+                                h3.article-title(v-text='item.title')
+                                p.article-text(v-text='item.outline')
                             div.article-cover
-                                img(src="http://img3.duitang.com/uploads/item/201701/02/20170102164305_2rUR5.thumb.140_140_c.jpeg")
+                                img(':src'='item.posterUrl || item.author.headImageUrl')
                         div.article-footer
-                            span 2017-04-27
+                            span(v-text='item.publishTime')
                             div.r
                                 div.eye
-                                span 45
-                div.card
-                    div.article
-                div.card
-                    div.article
-                div.card
-                    div.article
+                                span(v-text='item.visits')
             div#vote
+            div.card-more('@click'='getMorePersonalData()')
+                button.more 加载更多
         script(src='http://cdn.bootcss.com/vue/1.0.27/vue.min.js')
         script(src='http://cdn.bootcss.com/jquery/2.0.1/jquery.min.js')
         script(src='http://cdn.bootcss.com/vue-resource/1.0.3/vue-resource.min.js')

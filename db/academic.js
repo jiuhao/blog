@@ -12,6 +12,7 @@
  *      nick: 用户昵称,
  *      headImageUrl: 用户头像
  * }
+ * keywords 主题关键字数组
  * posterUrl 有图封面
  * publishTime 发布时间
  * updateTime 更新时间
@@ -34,7 +35,8 @@ exports.add = function *(db, data) {
         outline: data.outline,
         content: data.content,
         author: data.author,
-        posterUrl: data.posterUrl || '',
+        keywords: data.keywords,
+        posterUrl: data.posterUrl.split('/data')[1] && 'data' + data.posterUrl.split('/data')[1] || '',
         visits: 0,
         comments: 0,
         publishTime: now,
@@ -144,11 +146,13 @@ exports.load = function *(db, id) {
         visits: true,
         comments: true,
         author: true,
+        keywords: true,
         publishTime: true
     });
     if (!r) {
         throw new ApiError(ApiErrorNames.CONTENT_NOT_EXIST);
     }
+    return r;
 };
 /**
  * 关键字搜索
@@ -210,4 +214,78 @@ exports.recommendArticle = function *(db) {
         author: true,
         publishTime: true
     }).sort({updateTime: -1}).limit(8).toArray();
+};
+/**
+ * 获取学术资讯
+ * **/
+exports.getAcademics = function *(db, currentPage, size) {
+    let skip = (currentPage - 1) * size;
+    let Academic = db.academic;
+    return yield Academic.find({
+        posterUrl: {$ne: ''}
+    }, {
+        _id: true,
+        title: true,
+        outline: true,
+        content: true,
+        posterUrl: true,
+        visits: true,
+        comments: true,
+        author: true,
+        publishTime: true
+    }).skip(skip).sort({updateTime: -1}).limit(size).toArray();
+};
+/**
+ * 获取排行
+ * **/
+exports.getRanking = function *(db, currentPage, size) {
+    let skip = (currentPage - 1) * size;
+    let Academic = db.academic;
+    return yield Academic.find({}, {
+        _id: true,
+        title: true,
+        outline: true,
+        content: true,
+        posterUrl: true,
+        visits: true,
+        comments: true,
+        author: true,
+        publishTime: true
+    }).skip(skip).sort({visits: -1, publishTime: -1}).limit(size).toArray();
+};
+/**
+ * 获取所有的博客
+ * **/
+exports.listAll = function *(db, id) {
+    let Academic = db.academic;
+    return yield Academic.find({
+        _id: {$ne: id},
+        keywords: {$exists: true}
+    }, {
+        _id: true,
+        title: true,
+        outline: true,
+        posterUrl: true,
+        author: true,
+        keywords: true,
+        publishTime: true
+    }).toArray();
+};
+exports.getPersonalData = function *(db, userId, currentPage, size) {
+    let skip = (currentPage - 1) * size;
+    let Academic = db.academic;
+    return yield Academic.find({
+        'author.id': userId,
+        status: 1
+    }, {
+        _id: true,
+        title: true,
+        outline: true,
+        content: true,
+        posterUrl: true,
+        visits: true,
+        comments: true,
+        author: true,
+        publishTime: true
+    }).skip(skip).sort({visits: -1, publishTime: -1}).limit(size).toArray();
 };

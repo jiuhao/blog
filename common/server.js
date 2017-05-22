@@ -1,6 +1,7 @@
 const User = require('../services/user');
 const Publish = require('../services/publish');
-const System = require('../services/system');
+const System = require('../services/sys');
+
 //接口api
 const service = {};
 //用户注册
@@ -19,6 +20,14 @@ service.publishToAcademic = Publish.publishToAcademic;
 service.getArticle = Publish.getArticle;
 //查看推荐
 service.recommendArticle = Publish.recommendArticle;
+//查看学术
+service.getAcademics = Publish.getAcademics;
 //文件上传
 service.upload = System.upload;
+//排行
+service.getRanking = Publish.getRanking;
+//获取相思推荐
+service.getSimilar = System.getSimilar;
+//查看个人的数据
+service.getPersonalData = Publish.getPersonalData;
 module.exports = service;

@@ -5,6 +5,7 @@ const ApiError = require('../error/ApiError');
 const ApiErrorNames = require('../error/ApiErrorNames');
 const Properties = require('../utils/properties');
 const File = require('../common/file');
+const Recommend = require('../db/recommend');
 /**
  * 用户注册
  * @param db
@@ -41,7 +42,7 @@ exports.login = Database.warp(function *(db, param) {
         number: number,
         pwd: pwd
     });
-    console.log('user:', user);
+    // console.log('user:', user);
     return yield Session.create(db, 62208000000, user);
 });
 /**
@@ -70,6 +71,12 @@ exports.updateBaseInfo = Database.warp(function *(db, session, param) {
             headImageUrl: headImageUrl
         });
     }
+    //更新系统推荐
+    yield Recommend.add(db, operator.id, {
+        id: operator.id,
+        nick: nick,
+        headImageUrl: headImageUrl
+    });
     return 'success';
 });
 /**

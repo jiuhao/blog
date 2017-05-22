@@ -38,7 +38,7 @@ html
                             a.i-link(href='/index')
                                 em 首页
                         li.m-i
-                            a.i-link(href='/academic')
+                            a.i-link(href='/rankingList#academic')
                                 em 学术
                                 div.v-num
                                     span(v-text="num.academic < 999 ? num.academic : '999+'")
@@ -88,16 +88,16 @@ html
                                     ul.topic-preview(style='width: 500%; margin-left: -100%;')
                                         li
                                             a(href='')
-                                                img(src='//i0.hdslb.com/bfs/archive/ae0a77b90b1e4b827a6fd1b6c6def2c8fbe51996.jpg')
+                                                img(src='images/cover2.jpeg')
                                         li
                                             a(href='')
-                                                img(src='//i0.hdslb.com/bfs/archive/0e596dae6871ebee272aecb41b2ed7a2b6492d4a.jpg')
+                                                img(src='images/cover.jpg')
                                 div.s-bottom
                                     div.title
                                         span(style='display:inline')
-                                            a(href='') 玩家，是一份职业，也是一份人生
+                                            a(href='') 有志 有识 有恒
                                         span
-                                            a(href='') 啊…冬天快要过去了，wa2回来了
+                                            a(href='')
                                     ul#topic_slider.slider-bar
                                         li.on
                                         li
@@ -106,11 +106,11 @@ html
                                 ul.top-list.clearfix
                                     li(v-for="item in recommendArticle")
                                         div.v-item
-                                            a('@mouseenter'='details()' '@mouseleave'='hiddenDetails()' ':title'='item.title' '@click'='skip(item.articleId)')
+                                            a('@mouseenter'='details($event)' '@mouseleave'='hiddenDetails($event)' ':title'='item.title' '@click'='skip(item.articleId)')
                                                 div.preview
-                                                    img(src='//i0.hdslb.com/bfs/archive/50e360f8d9c585033e7dc72080d8ec7a3948c5f1.jpg_320x200.jpg')
-                                                div#info.info
-                                                    div#t.t(v-text='item.outline')
+                                                    img(':src'='item.posterUrl' style='height: 100%;width: 100%;')
+                                                div.info
+                                                    div.t(v-text='item.outline')
                                                     p.up
                                                         span(style='float: left' v-text='item.author.nick')
                                                         span(style='float: right' v-text='item.visits')
@@ -128,21 +128,25 @@ html
                                 div.read-push
                                     span.icon-refresh
                                     span.info
-                                        b 1020
-                                        em 条新动态
+                                        b(v-text='num.academic')
+                                        em 篇新文章
                             div.b-body
                                 ul.vidbox.v-list
-                                    li
+                                    li(v-for="item in academics.data")
                                         div.v
-                                            a.preview.cover-preview(href='')
-                                                img
-                                            a(href='')
-                                                div.t [冰上的尤里/維勇] 年少爱情 Young Love
+                                            a.preview.cover-preview('@mouseenter'='details($event)' '@mouseleave'='hiddenDetails($event)' ':title'='item.title' '@click'='skip(item.articleId)')
+                                                img(':src'='item.posterUrl' style='height: 100%;width: 100%;')
+                                            div.info-select
+                                                div.outline(v-text='item.outline')
+                                            a
+                                                div.t(v-text='item.title')
                                                 div.i
                                                     span
-                                                        i.b-icon.b-icon-v-play &nbsp; &nbsp; &nbsp; 2.8w
+                                                        i.b-icon.b-icon-v-play
+                                                        i(v-text='item.visits')
                                                     span
-                                                        i.b-icon.b-icon-v-dm &nbsp; &nbsp; &nbsp; 410
+                                                        i.b-icon.b-icon-v-dm
+                                                        i(v-text='item.comments')
                         div.b-r
                             div.b-head
                                 div.left
@@ -162,25 +166,16 @@ html
                                     div.r-list-wrapper(style='width: 200%; margin-left: -100%;')
                                         ul.r-list
                                         ul.r-list
-                                            li.on
-                                                i.number.n1 1
+                                            li.off(v-for="item in rankingList")
+                                                i.number.n1(v-text='$index + 1')
                                                 div.preview
                                                     a(href='')
-                                                        img(src='//i2.hdslb.com/bfs/archive/7c20d6b17d17db5ab1bd3bfdc3aad3b195b1162a.jpg_320x200.jpg')
+                                                        img(':src'='item.author.headImageUrl')
                                                 a.rl-info(href='')
-                                                    div.title.t 【Lex】带你看2016最污的福利动画
+                                                    div.title.t(v-text='item.title || item.outline')
                                                     div.i
-                                                        b.pts 综合评分：25.6万
-
-                                            li.off
-                                                i.number.n2 2
-                                                div.preview
-                                                    a(href='')
-                                                        img(src='//i2.hdslb.com/bfs/archive/7c20d6b17d17db5ab1bd3bfdc3aad3b195b1162a.jpg_320x200.jpg')
-                                                a.rl-info
-                                                    div.title.t 【Lex】带你看2017最污的福利动画
-                                                    div.i
-                                                        b.pts 综合评分：25.6万
+                                                        b.pts 阅读量：
+                                                        b.pts(v-text='item.visits')
                                 div.more-link
                                     a(href='') 查看更多
         include ./layout/footer

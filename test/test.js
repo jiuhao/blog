@@ -9,3 +9,5 @@
 // aa(function (db, aa, bb) {
 //
 // });
+// var aa = ''.split('/data');
+// console.log('&*&*:', aa);

@@ -26,11 +26,15 @@ const ApiErrorNames = require('../error/ApiErrorNames');
 exports.add = function *(db, userId, user) {
     let Recommend = db.recommend;
     let r = yield Recommend.findOne({
-        userId: userId
+        userId: userId,
     });
     if (r) {//增加推荐人
         yield Recommend.update({
-            userId: userId
+            userId: userId,
+            'data.2': {
+                $exists: 0
+            },
+            'data.id': {$ne: user.id}
         }, {
             $push: {
                 data: user

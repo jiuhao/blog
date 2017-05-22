@@ -1,0 +1,44 @@
+html
+    head
+        meta(charset="UTF-8")
+        title GGBlog
+        link(rel="shortcut icon" type="image/x-icon" href="./images/icon.png" media="screen")
+        style
+            include ../public/css/header.css
+            include ../public/css/rankingList.css
+    body#body
+        include ./layout/header
+        div.content
+            div.loaded
+                ul.list
+                    li(v-for="item in data" '@click'='skip(item._id)')
+                        div.l-item
+                            div.l-l
+                                a.preview(target='_blank')
+                                    img(':src'='item.posterUrl' v-if='item.posterUrl')
+                                    img(':src'='item.author.headImageUrl' v-if='!item.posterUrl')
+                                a
+                                    div.title(v-text='item.title')
+                                    div.outline(v-text='item.outline')
+                            div.i
+                                span
+                                    i.b-icon.b-icon-v-play
+                                    i(v-text='item.visits')
+                                span
+                                    i.b-icon.b-icon-v-dm
+                                    i(v-text='item.comments')
+                            div.info
+                                h6(style='float:left') 作者：
+                                div.nick(style='float:left' v-text='item.author.nick')
+                                div.time(v-text='item.publishTime')
+
+            div.card
+                button.more('@click'='getMoreAcademics()') 加载更多
+        include ./layout/footer
+        script(src='http://cdn.bootcss.com/vue/1.0.27/vue.min.js')
+        script(src='http://cdn.bootcss.com/jquery/2.0.1/jquery.min.js')
+        script(src='http://cdn.bootcss.com/vue-resource/1.0.3/vue-resource.min.js')
+        script
+            include ../public/javascript/md5.js
+            include ../public/javascript/utils.js
+            include ../public/javascript/rankingList.js

@@ -15,7 +15,8 @@
     "runkoa": "*",
     "koa-cors": "*",
     "koa-convert": "*",
-    "formidable": "*"
+    "formidable": "*",
+    "nodejieba": "*"
   },
   "scripts": {
     "start": "NODE_ENV=development ./node_modules/.bin/nodemon bin/run",

@@ -78,14 +78,13 @@ exports.open = function*() {
     if (db) {
         if (pool.length < conf.min) {
             co(function*() {
-                var x = yield connect();
+                let x = yield connect();
                 pool.push(x);
             });
         }
         return db;
     } else {
-        let db = yield connect();
-        return db;
+        return yield connect();
     }
 };
 

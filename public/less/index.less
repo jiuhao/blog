@@ -619,6 +619,34 @@ input, textarea {
                   height: 148px;
                   font-size: 12px;
                   overflow: hidden;
+                  .info-select {
+                    height: 100px;
+                    overflow: hidden;
+                    position: absolute;
+                    width: 100%;
+                    top: 0;
+                    left: 0;
+                    z-index: 1;
+                    background: linear-gradient(transparent, rgba(0,0,0,0.1) 20%, rgba(0,0,0,0.2) 35%, rgba(0,0,0,0.6) 65%, rgba(0,0,0,0.9));
+                    border-radius: 0 0 4px 4px;
+                  }
+                  .outline{
+                    color: #ffffff;
+                    position: absolute;
+                    top: 40px;
+                    left: 0;
+                    margin-left: 5px;
+                    margin-right: 5px;
+                    word-wrap: break-word;
+                    word-break: break-all;
+                  }
+                  a{
+                    color: #4af7ff;
+                    text-decoration: none;
+                  }
+                  a:hover {
+                    text-decoration: none;
+                  }
                   .preview {
                     width: 160px;
                     height: 100px;
@@ -641,6 +669,7 @@ input, textarea {
                   }
                   .cover-preview {
                     position: relative;
+                    border: 1px solid #dedfe0;
                   }
                   .t {
                     margin-bottom: 8px;

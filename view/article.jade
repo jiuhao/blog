@@ -20,14 +20,23 @@ html
             div.right
                 div.author
                     a.link(href='www.baidu.com', target="_blank")
-                        img.headImage(src='http://cdn.duitang.com/uploads/people/201701/02/20170102164107_eVxrS.thumb.100_100_c.jpeg')
-                    a.nick(href='www.baidu.com', target="_blank") _okok
+                        img.headImage(':src'='article.author.headImageUrl')
+                    a.nick(href='www.baidu.com', target="_blank" v-text='article.author.nick')
                     span.time
-                        span 20分钟前
-                        span |
-                        span 40次浏览
+                        span(v-text='article.publishTime')
+                        span  |
+                        span(v-text='article.visits')
+                        span 次浏览
+                div.recommend
+                    span(style='display: block;font-size: 20px;padding: 3 0;') 相似推荐
+                    a.link(v-for='item in recommend' '@click'='skip(item._id)')
+                        span.title(v-text='item.title')
+                        span.outline(v-text='item.outline')
+                        span 相似度：
+                        span.similar(v-text='item.similar')
         div.editor
             div#editor-trigger
+            div.publish 发表
         div.comment
             div
                 div.card
@@ -52,16 +61,14 @@ html
                                 div.answer-item
                                     div.answer-header
                                         div.author-info
-                                            a(href='www.baidu.com', target="_blank")
-                                                img.headImage(src='http://cdn.duitang.com/uploads/people/201701/02/20170102164107_eVxrS.thumb.100_100_c.jpeg')
-                                            a(href='www.baidu.com', target="_blank")
-                                                b 你好啊
+                                            a
+                                                img.headImage(':src'='user.headImageUrl')
+                                            a
+                                                b(v-text='user.nick')
                                     div.answer-content
                                         div.publish-content
                                             h2(style="text-align: center; ")
-                                                b 我是大标题
-                                            p 亲爱的，红尘漫漫，山高水阔知何处？你我灵魂做伴，一路并蒂，一路双飞，怎不令我对酒当歌，长忆梁祝化蝶款款飞？你是风儿我是沙，往日如烟往日花。“世界上，最美好的事，就是当你喜欢一个人的时候，对方也正好喜欢你”。亲爱的，这隽美的诗句，是为你我而写的吗？相伴的日子，我反复吟诵张爱玲的爱情诗句:于千万人中遇见你所要遇见的人，于千万年之中，时间无涯的荒野里，没有早一步，也没有晚一步。刚巧赶上了，没有别的话可说，唯有轻轻地问一句，哦，你也在这里吗？这是何等曼妙啊！
-                                            p 享受这令人愉悦的折磨吧!
+                                            p 厉害了，厉害了！
                                             br
                                         div.publish-time
                                             span 发布于 2017-04-24

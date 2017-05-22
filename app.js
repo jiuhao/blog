@@ -9,6 +9,7 @@ const bodyParser = require('koa-bodyparser');
 const cors = require('koa-cors');
 const co = require('co');
 const response_formatter = require('./middlewares/response_formatter');
+const fs = require('fs');
 //log工具
 const logUtil = require('./utils/log_util');
 const app = new koa();
@@ -87,26 +88,19 @@ for (let name in server) {
         });
     });
 }
-
 //页面路由
 router.get('/', async(ctx, next) => {
     ctx.render('index');
 });
-//登录注册
-router.get('/sign', async(ctx, next) => {
-    ctx.render('sign');
-});
-router.get('/editor', async(ctx, next) => {
-    ctx.render('editor');
-});
-router.get('/index', async(ctx, next) => {
-    ctx.render('index');
-});
-router.get('/article', async(ctx, next) => {
-    ctx.render('article');
-});
-router.get('/personalCenter', async(ctx, next) => {
-    ctx.render('personalCenter');
+let files = fs.readdirSync(__dirname + '/view/');
+files.forEach(function (itm) {
+    itm = itm.split('.')[0];
+    if (itm != 'layout') {
+        //登录注册
+        router.get('/' + itm, async(ctx, next) => {
+            ctx.render(itm);
+        });
+    }
 });
 app.use(router.routes());
 

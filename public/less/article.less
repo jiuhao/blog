@@ -48,7 +48,8 @@ input, textarea {
 
 .content {
   width: @width;
-  min-height: 300px;
+  clear: both;
+  overflow: hidden;
   position: relative;
   margin: 0 auto;
   .left {
@@ -105,13 +106,39 @@ input, textarea {
         color: #999;
       }
     }
+    .recommend {
+      padding: 36px 24px;
+      border: 1px solid #e7eaf1;
+      border-radius: 2px;
+      box-shadow: 0 1px 3px rgba(0, 37, 55, 0.05);
+      box-sizing: border-box;
+      text-align: center;
+      a {
+        text-decoration: none;
+        color: #0f88eb;
+        font-size: 13px;
+        padding: 3px 0px;
+        display: block;
+      }
+
+    }
   }
 }
 .editor{
   width: @width;
-  min-height: 160px;
   position: relative;
-  margin: 0 auto;
+  margin: 0px auto;
+  .publish{
+    position: absolute;
+    top: 4px;
+    right: 55px;
+    z-index: 999;
+    color: #00a1d6;
+    cursor: pointer;
+  }
+  .publish:hover{
+    text-decoration: underline;
+  }
 }
 .comment {
   width: @width;

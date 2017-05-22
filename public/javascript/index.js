@@ -11,7 +11,13 @@ let vue = new Vue({
             event: 0,
             help: 0
         },
-        recommendArticle: []
+        recommendArticle: [],//推荐文章
+        academics: {
+            currentPage: 1,
+            size: 10,
+            data: []
+        },
+        rankingList: []
     },
     methods: {
         //导航栏数据加载
@@ -24,7 +30,7 @@ let vue = new Vue({
                     //存储在localStorage里面
                     if (data.code != 0) {
                         alert(data.message);
-                        if (data.code != 102 || data.code != 104) {
+                        if (data.code == 102 || data.code == 104) {
                             //删除本地缓存
                             localStorage.removeItem('ggblogSession');
                             window.location.href = '/sign';
@@ -44,7 +50,7 @@ let vue = new Vue({
                     //存储在localStorage里面
                     if (data.code != 0) {
                         alert(data.message);
-                        if (data.code != 102 || data.code != 104) {
+                        if (data.code == 102 || data.code == 104) {
                             //删除本地缓存
                             localStorage.removeItem('ggblogSession');
                             window.location.href = '/sign';
@@ -55,24 +61,78 @@ let vue = new Vue({
                 }
             });
         },
-        details: function () {
-            $('#info').attr('class', 'info-select');
-            $('#t').attr('class', 't-select');
+        details: function (event) {
+            $(event.target).children('.info').attr('class', 'info-select');
+            $(event.target).children('.info').children('.t').attr('class', 't-select');
         },
-        hiddenDetails: function () {
-            $('#info').attr('class', 'info');
-            $('#t').attr('class', 't');
+        hiddenDetails: function (event) {
+            $(event.target).children('.info-select').attr('class', 'info');
+            $(event.target).children('.info').children('.t-select').attr('class', 't');
         },
         logout: function () {
             logout();
             vue.user = null;
         },
         skip: function (id) {
-            window.location.href = '/article?id=' + id;
+            window.open('/article?id=' + id);
+        },
+        getAcademics: function () {
+            let currentPage = this.academics.currentPage;
+            let size = this.academics.size;
+            $.ajax({
+                type: 'POST',
+                url: '/api/getAcademics',
+                dataType: 'json',
+                data: {
+                    currentPage: currentPage,
+                    size: size
+                },
+                success: function (data) {
+                    //存储在localStorage里面
+                    if (data.code != 0) {
+                        alert(data.message);
+                        if (data.code == 102 || data.code == 104) {
+                            //删除本地缓存
+                            localStorage.removeItem('ggblogSession');
+                            window.location.href = '/sign';
+                        }
+                    } else {
+                        vue.academics.data = data.data;
+                    }
+                }
+            });
+        },
+        getRanking: function () {
+            $.ajax({
+                type: 'POST',
+                url: '/api/getRanking',
+                dataType: 'json',
+                data: {
+                    type: 'academic',
+                    currentPage: 1,
+                    size: 7
+                },
+                success: function (data) {
+                    //存储在localStorage里面
+                    if (data.code != 0) {
+                        alert(data.message);
+                        if (data.code == 102 || data.code == 104) {
+                            //删除本地缓存
+                            localStorage.removeItem('ggblogSession');
+                            window.location.href = '/sign';
+                        }
+                    } else {
+                        console.log('data:', typeof data, data);
+                        vue.rankingList = data.data;
+                    }
+                }
+            });
         }
     },
     ready: function () {
         this.getNum();
+        this.getRanking();
         this.getRecommendArticle();
+        this.getAcademics();
     }
 });

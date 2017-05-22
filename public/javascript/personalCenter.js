@@ -11,6 +11,11 @@ let vue = new Vue({
             event: 0,
             help: 0
         },
+        personalData:{
+            academic:[]
+        },
+        currentPage: 1,
+        size: 9
     },
     methods: {
         isLogin: function () {
@@ -32,7 +37,7 @@ let vue = new Vue({
                     //存储在localStorage里面
                     if (data.code != 0) {
                         alert(data.message);
-                        if (data.code != 102 || data.code != 104) {
+                        if (data.code == 102 || data.code == 104) {
                             //删除本地缓存
                             localStorage.removeItem('ggblogSession');
                             window.location.href = '/sign';
@@ -42,10 +47,48 @@ let vue = new Vue({
                     }
                 }
             });
+        },
+        getPersonalData: function () {
+            let currentPage = this.currentPage;
+            let size = this.size;
+            $.ajax({
+                type: 'POST',
+                url: '/api/getPersonalData',
+                dataType: 'json',
+                data: {
+                    session: getSession(),
+                    param: {
+                        type: 'academic',
+                        currentPage: currentPage,
+                        size: size
+                    }
+                },
+                success: function (data) {
+                    //存储在localStorage里面
+                    if (data.code != 0) {
+                        alert(data.message);
+                        if (data.code == 102 || data.code == 104) {
+                            //删除本地缓存
+                            localStorage.removeItem('ggblogSession');
+                            window.location.href = '/sign';
+                        }
+                    } else {
+                        vue.personalData.academic = vue.personalData.academic.concat(data.data.academic);
+                    }
+                }
+            });
+        },
+        getMorePersonalData: function () {
+            this.currentPage += 1;
+            this.getPersonalData();
+        },
+        skip: function (id) {
+            window.open('/article?id=' + id);
         }
     },
     ready: function () {
         this.isLogin();
         this.getNum();
+        this.getPersonalData()
     }
 });
