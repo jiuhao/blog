@@ -26,7 +26,7 @@ service.getAcademics = Publish.getAcademics;
 service.upload = System.upload;
 //排行
 service.getRanking = Publish.getRanking;
-//获取相思推荐
+//获取相似推荐
 service.getSimilar = System.getSimilar;
 //查看个人的数据
 service.getPersonalData = Publish.getPersonalData;

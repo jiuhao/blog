@@ -20,38 +20,45 @@ exports.publishToAcademic = Database.warp(function *(db, session, param) {
     let operator = yield Session.check(db, session.id, session.timestamp, session.sign);
     let title = '我的标题我做主';
     let strategy = {
-        1: param.html.match(/<h1>(.*)<\/h1>/),
-        2: param.html.match(/<h2>(.*)<\/h2>/),
-        3: param.html.match(/<h3>(.*)<\/h3>/),
-        4: param.html.match(/<h4>(.*)<\/h4>/),
-        5: param.html.match(/<h5>(.*)<\/h5>/)
+        1: param.html.match(/<h1 (.*)>(.*)<\/h1>/),
+        2: param.html.match(/<h2 (.*)>(.*)<\/h2>/),
+        3: param.html.match(/<h3 (.*)>(.*)<\/h3>/),
+        4: param.html.match(/<h4 (.*)>(.*)<\/h4>/),
+        5: param.html.match(/<h5 (.*)>(.*)<\/h5>/)
     };
     for (let i = 1; i < 6; i++) {
         strategy[i];
-        title = RegExp.$1;
+        title = RegExp.$2;
+        console.log('title&*&*:', title);
         if (title) {
             break;
         }
     }
+    if (!title) {
+        title = '我的标题我做主';
+    }
     let keywords = [];
-    //获取标题 摘要
+    //获取标题摘要
     let tmp = nodejieba.extract(text, 5);
     for (let item of tmp) {
         keywords.push(item.word);
     }
     //发布文章
-    yield Academic.add(db, {
-        title: title,
-        outline: keywords.toString() || '暂无简介',
-        content: html,
-        posterUrl: param.posterUrl || operator.headImageUrl,
-        author: {
-            id: operator.id,
-            nick: operator.nick,
-            headImageUrl: operator.headImageUrl
-        },
-        keywords: keywords
-    });
+    // yield Academic.add(db, {
+    //     title: title,
+    //     outline: keywords.toString() || '暂无简介',
+    //     content: html,
+    //     posterUrl: param.posterUrl || operator.headImageUrl,
+    //     author: {
+    //         id: operator.id,
+    //         nick: operator.nick,
+    //         headImageUrl: operator.headImageUrl
+    //     },
+    //     keywords: keywords
+    // });
+
+    console.log('title:', title);
+    console.log('outline:', keywords.toString());
     return {
         title: title || '未检测到标题',
         outline: keywords.toString() || '暂无简介'
