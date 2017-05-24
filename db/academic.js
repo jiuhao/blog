@@ -238,10 +238,25 @@ exports.getAcademics = function *(db, currentPage, size) {
 /**
  * 获取排行
  * **/
-exports.getRanking = function *(db, currentPage, size) {
+exports.getRanking = function *(db, currentPage, size, keyword) {
     let skip = (currentPage - 1) * size;
     let Academic = db.academic;
-    return yield Academic.find({}, {
+    let keywordCondition = [];
+    let query = {};
+    if (keyword) {
+        let regExp = new RegExp(keyword);
+        keywordCondition.push({
+            title: regExp
+        });
+        keywordCondition.push({
+            outline: regExp
+        });
+        keywordCondition.push({
+            'author.nick': regExp
+        });
+        query.$or = keywordCondition;
+    }
+    return yield Academic.find(query, {
         _id: true,
         title: true,
         outline: true,

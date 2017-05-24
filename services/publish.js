@@ -161,7 +161,7 @@ exports.getAcademics = Database.warp(function *(db, currentPage, size) {
 /**
  * 获取排行
  * **/
-exports.getRanking = Database.warp(function *(db, type, currentPag, size) {
+exports.getRanking = Database.warp(function *(db, type, currentPag, size, keyword) {
     if (!type) {
         throw new ApiError(ApiErrorNames.PARAM_ERROR);
     }
@@ -169,7 +169,7 @@ exports.getRanking = Database.warp(function *(db, type, currentPag, size) {
     size = parseInt(size);
     let r = [];
     if ('academic' == type) {
-        r = yield Academic.getRanking(db, currentPag, size);
+        r = yield Academic.getRanking(db, currentPag, size, keyword);
         for (let i = 0; i < r.length; i++) {
             r[i].posterUrl = r[i].posterUrl && Properties.baseUrl + r[i].posterUrl || '';
             r[i].author.headImageUrl = Properties.baseUrl + r[i].author.headImageUrl;

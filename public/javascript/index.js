@@ -154,6 +154,10 @@ let vue = new Vue({
                     }
                 });
             }
+        },
+        search: function () {
+            let keyword = $('#search-keyword').val();
+            window.open('/rankingList?' + 'keyword='+ keyword + '#academic');
         }
     },
     ready: function () {

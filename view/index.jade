@@ -73,9 +73,9 @@ html
                                 div.v-num
                                     span(v-text="num.help < 999 ? num.help : '999+'")
                     div.search
-                        form#searchForm(action='' target='_blank')
-                            input.search-keyword(name='keyword' placeholder="可输入想查询的关键词～")
-                            button.search-submit(type='submit')
+                        div#searchForm
+                            input#search-keyword.search-keyword(name='keyword' placeholder="可输入想查询的关键词～")
+                            button.search-submit('@click'='search()')
                         a.link-ranking(href='/ranking')
                             span 排行榜
         div.b-page-body

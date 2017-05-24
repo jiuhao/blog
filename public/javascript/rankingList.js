@@ -4,12 +4,16 @@ let vue = new Vue({
         user: user,//用户信息
         data: [],
         currentPage: 1,
-        size: 12
+        size: 12,
+        keyword: ''
     },
     methods: {
         getRanking: function () {
             let type = (location.hash).split('#')[1];
+            let keyword = (location.search).split('=')[1];
             console.log('type:', type);
+            console.log('keyword:', keyword);
+            this.keyword = keyword;
             if (type == 'academic') {
                 this.getAcademics();
             }
@@ -17,6 +21,7 @@ let vue = new Vue({
         getAcademics: function () {
             let currentPage = this.currentPage;
             let size = this.size;
+            let keyword = this.keyword;
             $.ajax({
                 type: 'POST',
                 url: '/api/getRanking',
@@ -24,7 +29,8 @@ let vue = new Vue({
                 data: {
                     type: 'academic',
                     currentPage: currentPage,
-                    size: size
+                    size: size,
+                    keyword: decodeURI(keyword)
                 },
                 success: function (data) {
                     //存储在localStorage里面
