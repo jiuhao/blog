@@ -44,21 +44,18 @@ exports.publishToAcademic = Database.warp(function *(db, session, param) {
         keywords.push(item.word);
     }
     //发布文章
-    // yield Academic.add(db, {
-    //     title: title,
-    //     outline: keywords.toString() || '暂无简介',
-    //     content: html,
-    //     posterUrl: param.posterUrl || operator.headImageUrl,
-    //     author: {
-    //         id: operator.id,
-    //         nick: operator.nick,
-    //         headImageUrl: operator.headImageUrl
-    //     },
-    //     keywords: keywords
-    // });
-
-    console.log('title:', title);
-    console.log('outline:', keywords.toString());
+    yield Academic.add(db, {
+        title: title,
+        outline: keywords.toString() || '暂无简介',
+        content: html,
+        posterUrl: param.posterUrl || operator.headImageUrl,
+        author: {
+            id: operator.id,
+            nick: operator.nick,
+            headImageUrl: operator.headImageUrl
+        },
+        keywords: keywords
+    });
     return {
         title: title || '未检测到标题',
         outline: keywords.toString() || '暂无简介'
