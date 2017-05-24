@@ -178,6 +178,9 @@ html
                                                         b.pts(v-text='item.visits')
                                 div.more-link
                                     a(href='') 查看更多
+        div.recommend
+            h3 推荐好友：
+                span(v-for='item in friends' v-text='item.nick')
         include ./layout/footer
         script(src='http://cdn.bootcss.com/vue/1.0.27/vue.min.js')
         script(src='http://cdn.bootcss.com/jquery/2.0.1/jquery.min.js')

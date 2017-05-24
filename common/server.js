@@ -30,4 +30,6 @@ service.getRanking = Publish.getRanking;
 service.getSimilar = System.getSimilar;
 //查看个人的数据
 service.getPersonalData = Publish.getPersonalData;
+//查看推荐好友
+service.getFriends = User.getFriends;
 module.exports = service;
