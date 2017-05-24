@@ -17,7 +17,8 @@ let vue = new Vue({
             size: 10,
             data: []
         },
-        rankingList: []
+        rankingList: [],
+        friends:[]
     },
     methods: {
         //导航栏数据加载
@@ -127,6 +128,32 @@ let vue = new Vue({
                     }
                 }
             });
+        },
+        getFriends: function () {
+            if(user && user.headImageUrl){
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/getFriends',
+                    dataType: 'json',
+                    data: {
+                        session: getSession(),
+                        size: 7
+                    },
+                    success: function (data) {
+                        //存储在localStorage里面
+                        if (data.code != 0) {
+                            alert(data.message);
+                            if (data.code == 102 || data.code == 104) {
+                                //删除本地缓存
+                                localStorage.removeItem('ggblogSession');
+                                window.location.href = '/sign';
+                            }
+                        } else {
+                            vue.friends = data.data;
+                        }
+                    }
+                });
+            }
         }
     },
     ready: function () {
@@ -134,5 +161,6 @@ let vue = new Vue({
         this.getRanking();
         this.getRecommendArticle();
         this.getAcademics();
+        this.getFriends();
     }
 });

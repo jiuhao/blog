@@ -14,7 +14,11 @@
  *      activity: 0,//活动
  *      emotion: 0,//情感
  *      event: 0//事件
- * }
+ * },
+ * sex 性别
+ * birthyear  出生年
+ * birthday 出生月日
+ * tags 标签
  * type 权限 1为学生 10为教师 100为管理员
  * createTime 注册时间
  * lastLoginTime 最近一次登录时间
@@ -162,4 +166,13 @@ exports.load = function *(db, userId) {
         throw new ApiError(ApiErrorNames.USER_NOT_EXIST);
     }
     return r;
+};
+/**
+ * 获取部分用户
+ * **/
+exports.getFriends = function *(db, userId, size) {
+    const User = db.user;
+    return yield User.find({
+        _id:{$ne: userId}
+    }).limit(size).toArray();
 };

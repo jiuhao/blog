@@ -15,7 +15,7 @@ exports.register = Database.warp(function *(db, param) {
     let number = param.number;
     let nick = param.nick;
     let pwd = param.pwd;
-    if (!number || number.length < 3 || number.length > 15 || !nick || nick.length < 3 || nick.length > 15 || !pwd || pwd.length < 3 || pwd.length > 15) {
+    if (!number || number.length < 3 || number.length > 15 || !nick || !pwd || pwd.length < 3 || pwd.length > 15) {
         throw new ApiError(ApiErrorNames.PARAM_ERROR);
     }
     let user = yield User.register(db, {
@@ -110,4 +110,17 @@ exports.getUserNum = Database.warp(function *(db, session) {
     let operator = yield Session.check(db, session.id, session.timestamp, session.sign);
     let user = yield User.load(db, operator.id);
     return user.assets;
+});
+/**
+ * 获取部分用户
+ * **/
+exports.getFriends = Database.warp(function *(db, session, size) {
+    size = parseInt(size);
+    let operator = yield Session.check(db, session.id, session.timestamp, session.sign);
+    let users = yield User.getFriends(db, operator.id, size);
+    for (let i = 0; i < users.length; i++) {
+        users.headImageUrl = Properties.baseUrl + Properties.defaultHeadImageUrl
+    }
+    console.log('users:', users);
+    return users;
 });
