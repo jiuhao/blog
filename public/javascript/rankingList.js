@@ -30,7 +30,7 @@ let vue = new Vue({
                     type: 'academic',
                     currentPage: currentPage,
                     size: size,
-                    keyword: decodeURI(keyword)
+                    keyword: keyword && decodeURI(keyword) || ''
                 },
                 success: function (data) {
                     //存储在localStorage里面
